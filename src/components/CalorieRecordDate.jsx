@@ -1,16 +1,13 @@
 import "./CalorieRecordDate.css";
 import StyledRecordCell from "./StyledRecordCell";
 
-function CalorieRecordDate(props) {
-  const year = props.recordDate.toLocaleDateString("default", {
-    year: "numeric",
-  });
-  const month = props.recordDate.toLocaleDateString("default", {
-    month: "long",
-  });
-  const day = props.recordDate.toLocaleDateString("default", {
-    day: "numeric",
-  });
+function CalorieRecordDate({ recordDate }) {
+  // تأكد إنه Date object حتى لو جالك string
+  const date = recordDate instanceof Date ? recordDate : new Date(recordDate);
+
+  const year = date.toLocaleDateString("default", { year: "numeric" });
+  const month = date.toLocaleDateString("default", { month: "long" });
+  const day = date.toLocaleDateString("default", { day: "numeric" });
 
   return (
     <StyledRecordCell>

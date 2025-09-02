@@ -1,10 +1,11 @@
 import RecordList from "./RecordList";
 import styles from "./ListingSection.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getDateFromString, getDateStringNoTimezone } from "../../utils";
 
 function ListingSection({ allRecords }) {
   const [currentDate, setCurrentDate] = useState(null);
+  const [user, setUser] = useState(null);
 
   const dateChangeHandler = (event) => {
     const value = event.target.value;
@@ -25,6 +26,23 @@ function ListingSection({ allRecords }) {
     ? allRecords.filter(dateFilter)
     : allRecords;
 
+  useEffect(() => {
+    const getUser = async () => {
+      console.log("Making a new HTTP request");
+      const response = await fetch(
+        "https://raw.githubusercontent.com/Monaam700/almdrasa-current-projects/main/data.json"
+      );
+      const data = await response.json();
+      setUser({
+        id: data.id,
+        firstName: data["first_name"],
+        lastName: data["last_name"],
+      });
+    };
+
+    getUser();
+  }, []);
+
   return (
     <>
       <label className={styles["listing-picker-label"]} htmlFor="ListingDate">
@@ -42,6 +60,13 @@ function ListingSection({ allRecords }) {
         className={styles["clear-button"]}
       ></button>
       <RecordList records={filteredRecords} />
+      {user && (
+        <div>
+          <p>{user.id}</p>
+          <p>{user.firstName}</p>
+          <p>{user.lastName}</p>
+        </div>
+      )}
     </>
   );
 }
