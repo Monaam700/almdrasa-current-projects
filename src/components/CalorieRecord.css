@@ -1,0 +1,16 @@
+.record {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  list-style: none;
+  display: flex;
+  color: #000;
+  justify-content: space-around;
+  padding: 10px;
+  align-items: center;
+  background-color: antiquewhite;
+}
+
+.record-calories {
+  color: #000000;
+  font-weight: bold;
+}
